@@ -7,24 +7,41 @@ async function buscarCursos() {
     const response = await fetch(url)
     const cursos = await response.json()
 
+    console.log(cursos)
     return cursos
 }
-
 
 async function exibirCursos() {
 
     const courseList = await buscarCursos()
 
-    const courses = courseList.data;
+    courseList.forEach(course => {
 
-    courses.forEach(course => {
+        const img = document.createElement('img')
+        img.src = `./img/${course.sigla}-icon.svg`
+        img.alt = course.sigla
 
-        const button = document.createElement('button')
-        button.textContent = course.sigla
+        const buttonText = document.createElement('p')
+        buttonText.textContent = course.sigla
 
+        const courseButton = document.createElement('button')
+       
+        
+        courseButton.appendChild(img)
+        courseButton.appendChild(buttonText)
+        cursosDisponiveis.appendChild(courseButton)
     })
 
-    cursosDisponiveis.appendChild(button)
+
+    function exibirPerfis () {
+    
+        cancelar.addEventListener('click', () => {
+           const main = document.querySelector('main')
+           main.className = 'card-show'
+        })
+    }
+
+    
 }
 
 exibirCursos()
